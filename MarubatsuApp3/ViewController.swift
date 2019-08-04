@@ -13,6 +13,9 @@ class ViewController: UIViewController {
     // 1、クイズラベルの紐付け
     @IBOutlet weak var questionLabel: UILabel!
     
+    // ★★ヒントラベルを紐付け
+    @IBOutlet weak var hintButton: UIButton!
+    
     // 3,現在のクイズ番号を管理
     var currentQuestionNum: Int = 0
     

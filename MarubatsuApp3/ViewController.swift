@@ -42,12 +42,12 @@ class ViewController: UIViewController {
     // 2,◯ボタンの紐付け
    
     @IBAction func tappedYesButton(_ sender: UIButton) {
-        checkAnswer(yourAnswer: true)
+        
     }
     
     // 2,xボタンの紐付け
     @IBAction func tappedNoButton(_ sender: UIButton) {
-        checkAnswer(yourAnswer: false)
+        
     }
 
 
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
         let question = questions[currentQuestionNum]
         
         //問題(辞書)からkeyを指定して問題を取得
-        if let qu = question["question"] as? String{
+        if let que = question["question"] as? String{
             // question key の中身をlabelに代入
             questionLabel.text = que
         }

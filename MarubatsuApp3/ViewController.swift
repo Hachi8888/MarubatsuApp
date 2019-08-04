@@ -16,16 +16,22 @@ class ViewController: UIViewController {
     // 3,現在のクイズ番号を管理
     var currentQuestionNum: Int = 0
     
+    // ★正解数のカウント
+    var collectNum: Int = 0
+    
     // 問題を管理
-    let questions: [[String: Any]] = [
+    let questions: [String: Any : String] = [
         [ "question": "1 + 1 = 2 である",
-          "answer": true
+          "answer": true,
+          "hint": "たんぼのた"
         ],
         [ "question": "石川県は四国地方である",
-          "answer": false
+          "answer": false,
+          "hint": "日本海に面しています"
         ],
         [ "question": "トマトは夏野菜である",
-          "answer": true
+          "answer": true,
+          "hint": "トマトと"
         ],
         [ "question": "つくば市は栃木県である",
           "answer": false
@@ -67,6 +73,22 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    // ★問題の最後に正解数を表示する関数
+    func showCollectNum(message: String){
+        
+        //アラートの作成
+        let alert2 = UIAlertController(title: "結果発表" ,message: message, preferredStyle: .alert)
+        
+        //
+        let close2 = UIAlertAction(title: "閉じる", style: .cancel,handler: nil)
+        
+        //作成したalertに閉じるボタンを追加
+        alert2.addAction(close2)
+        
+        //アラートを表示する
+        present(alert2, animated: true, completion: nil)
+    }
+    
     
     //問題を表示する関数
     func showQuestion(){
@@ -80,6 +102,20 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    // ★正解数を表示するための関数
+    func checkLastAnswer(){
+        // 正解数の結果発表
+        let result = "\(questions.count)問中\(collectNum)問正解です!"
+        
+        if currentQuestionNum >= questions.count{
+            
+            // 正解数の結果発表をします
+            showCollectNum(message: result)
+            
+        }
+        }
+    
     // 正解なら次の問題を表示します
     func checkAnswer(yourAnswer: Bool) {
         
@@ -90,33 +126,58 @@ class ViewController: UIViewController {
             if yourAnswer == ans {
                 // 正解
                 // currentQuestionNumを1足して次の問題に進む
-               showAlert(message: "【祝】正解です")
+                // 回答するとcurrentQuestionNumに1を足す(問題を進める)
                 currentQuestionNum += 1
+                // ★正解するとcollectNumに1を足す(正解数のカウント)
+                collectNum += 1
                 
+                //最終問題かチェック、そうならば結果を表示
+                if currentQuestionNum >=  questions.count{
+                    checkLastAnswer()
+                } else {
+                 showAlert(message: "【祝】正解です")
+                }
                 
             } else {
                 // 不正解
-                showAlert(message: "不正解です")
+                if currentQuestionNum >=  questions.count{
+                    checkLastAnswer()
+                } else {
+                    showAlert(message: "不正解です")
+                
+                // 回答するとcurrentQuestionNumに1を足す(問題を進める)
                 currentQuestionNum += 1
+                    
             }
+            
         }else{
             print("答えが入ってません")
             return
 }
         
         
+        
 
         
         if currentQuestionNum >= questions.count {
-            currentQuestionNum = 0
+
+        // 最初の問題に戻ります
+             currentQuestionNum = 0
+
+
+
         }
         
-        // 問題を表示します。
-        //正解であれば次の問題が、不正解であれば同じ問題が再表示されます。
-        showQuestion()
+        
+        
+        
+//         問題を表示します。
+//        正解であれば次の問題が、不正解であれば同じ問題が再表示されます。
+         showQuestion()
     }
-
+    
 
     }
     
+
 
